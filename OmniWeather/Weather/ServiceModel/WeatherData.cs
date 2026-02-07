@@ -2,7 +2,9 @@ namespace OmniWeather.Weather.ServiceModel;
 
 public sealed class WeatherData
 {
-    public DateTime Timestamp { get; set; }
+    public DateTime Start { get; set; }
+
+    public DateTime End { get; set; }
 
     public float Temperature { get; set; }
 

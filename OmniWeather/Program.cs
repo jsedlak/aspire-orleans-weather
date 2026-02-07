@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IGeocoder, OpenMeteoGeocoder>();
+builder.Services.AddScoped<IForecastProvider, OpenMeteoForecastProvider>();
 builder.UseOrleans();
 
 // Add services to the container.

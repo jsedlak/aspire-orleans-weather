@@ -26,12 +26,7 @@ public class OpenMeteoGeocoder : IGeocoder
         response.EnsureSuccessStatusCode();
 
         var content = response.Content.ReadAsStringAsync().Result;
-
-        _logger.LogInformation("Geocoding response for '{Location}': {Content}", location, content);
-
         var result = JsonConvert.DeserializeObject<OpenMeteoGeocodeResult>(content);
-
-_logger.LogInformation("Parsed geocoding result for '{Location}': {@Result}", location, result);
 
         if (result.Results.Count() == 0) 
         {
