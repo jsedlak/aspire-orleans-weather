@@ -75,17 +75,15 @@ public class OpenMeteoForecastProvider : IForecastProvider
             JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true })
         );
 
+        if(result is null)
+        {
+            throw new Exception("Failed to deserialize forecast data.");
+        }
+
         var weatherData = new List<WeatherData>();
 
         for (var i = 0; i < result.Hourly.Time.Length; i++)
         {
-            _logger.LogInformation($"Processing Index: {i}");
-            _logger.LogInformation($"\tTime: {result.Hourly.Time[i]}");
-            _logger.LogInformation($"\tTemp: {result.Hourly.Temperature2m[i]}");
-            _logger.LogInformation($"\tWeatherCode: {result.Hourly.WeatherCode[i]}");
-            _logger.LogInformation($"\tPrecipProb: {result.Hourly.PrecipitationProbability[i]}");
-            _logger.LogInformation($"\tRain: {result.Hourly.Rain[i]}");
-            _logger.LogInformation($"\tSnowfall: {result.Hourly.Snowfall[i]}");
 
             weatherData.Add(new WeatherData
             {
@@ -104,27 +102,27 @@ public class OpenMeteoForecastProvider : IForecastProvider
 
     public class OpenMeteoForecastResult{
         [JsonPropertyName("hourly")] 
-        public OpenMeteoHourlyData Hourly { get; set; }
+        public OpenMeteoHourlyData Hourly { get; set; } = null!;
     }
 
     public class OpenMeteoHourlyData
     {
         [JsonPropertyName("time")] 
-        public DateTime[] Time { get; set; }
+        public DateTime[] Time { get; set; } = null!;
 
         [JsonPropertyName("temperature_2m")] 
-        public double[] Temperature2m { get; set; }
+        public double[] Temperature2m { get; set; } = null!;
 
         [JsonPropertyName("weather_code")] 
-        public int[] WeatherCode { get; set; }
+        public int[] WeatherCode { get; set; } = null!;
 
         [JsonPropertyName("precipitation_probability")] 
-        public double[] PrecipitationProbability { get; set; }
+        public double[] PrecipitationProbability { get; set; } = null!;
 
         [JsonPropertyName("rain")] 
-        public double[] Rain { get; set; }
+        public double[] Rain { get; set; } = null!;
 
         [JsonPropertyName("snowfall")] 
-        public double[] Snowfall { get; set; }
+        public double[] Snowfall { get; set; } = null!;
     }
 }
